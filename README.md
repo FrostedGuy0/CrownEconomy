@@ -6,10 +6,6 @@
   <img src="assets/crown_economy_plugin_banner.svg" alt="CrownEconomy Logo" width="720" />
 </p>
 
-![paper](https://img.shields.io/badge/Paper-1.21.1+-7fb2ff?style=flat-square)
-![vault](https://img.shields.io/badge/Vault-Required-f7c948?style=flat-square)
-![luckperms](https://img.shields.io/badge/LuckPerms-Recommended-8e6cff?style=flat-square)
-![yaml](https://img.shields.io/badge/Data-YAML-4caf50?style=flat-square)
 [![discord-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/social/discord-plural_vector.svg)](https://discord.gg/cCUVWxcuAw)
 ![paper](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/paper_vector.svg)
 [![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_vector.svg)](https://github.com/FrostedGuy0/CrownEconomy)
@@ -87,6 +83,10 @@ Every other auction house plugin for Paper either looks outdated, barely configu
 - GemsEconomy
 - CMI Economy
 - Any other Vault-compatible economy plugin
+
+![vault](https://img.shields.io/badge/Vault-Required-f7c948?style=flat-square)
+![luckperms](https://img.shields.io/badge/LuckPerms-Recommended-8e6cff?style=flat-square)
+![yaml](https://img.shields.io/badge/Data-YAML-4caf50?style=flat-square)
 
 ---
 
