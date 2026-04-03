@@ -1,19 +1,27 @@
 # 💰 CrownEconomy
 
-> **The best economy plugin for Paper servers.** Premium auction house, stunning GUIs, 100% customizable. Built for survival, SMP, factions, and RPG servers.
+> **The best economy plugin for Paper, Purpur, Spigot, and Bukkit servers.** Premium auction house, stunning GUIs, 100% customizable. Built for survival, SMP, factions, and RPG servers.
 
 <p align="center">
   <img src="assets/crown_economy_plugin_banner.svg" alt="CrownEconomy Logo" width="720" />
 </p>
 
-[![discord-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/social/discord-plural_vector.svg)](https://discord.gg/cCUVWxcuAw)
+<p align="center">
+  <img alt="Purpur Compatible" src="https://img.shields.io/badge/Purpur-Compatible-ff9f00?style=for-the-badge" />
+  <img alt="Spigot / Bukkit Compatible" src="https://img.shields.io/badge/Spigot%20%2F%20Bukkit-Compatible-00a2ff?style=for-the-badge" />
+</p>
+
 ![paper](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/paper_vector.svg)
+![purpur](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/purpur_vector.svg)
 [![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_vector.svg)](https://github.com/FrostedGuy0/CrownEconomy)
 [![hangar](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/hangar_vector.svg)](https://hangar.papermc.io/FrostedGuy/CrownEconomy)
+[![discord-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/social/discord-plural_vector.svg)](https://discord.gg/cCUVWxcuAw)
 
-**CrownEconomy** is the best economy plugin and best auction house plugin for Paper 1.21.1 Minecraft servers. If you're looking for a simple, powerful, and 100% customizable economy suite that your players will actually enjoy, you've found it.
+**CrownEconomy** is the best economy plugin and best auction house plugin for Paper, Purpur, Spigot, and Bukkit 1.21.1 servers. If you're looking for a simple, powerful, and 100% customizable economy suite that your players will actually enjoy, you've found it.
 
 Clean bordered GUIs. Instant feedback. Smart expiry handling. Deep configuration. **Vault-compatible** out of the box. No bloat, no ugly menus, no compromises.
+
+Supports Paper, Purpur, Spigot, and Bukkit 1.21.1+.
 
 Whether you're building a survival economy, an SMP marketplace, or a full RPG server, **CrownEconomy** is the last economy plugin you'll ever need.
 
@@ -21,9 +29,9 @@ Whether you're building a survival economy, an SMP marketplace, or a full RPG se
 
 ## 🔍 Why CrownEconomy?
 
-Every other auction house plugin for Paper either looks outdated, barely configures, or breaks under load. CrownEconomy was built from scratch to be the definitive, modern answer to server economy:
+Every other auction house plugin for modern Minecraft servers either looks outdated, barely configures, or breaks under load. CrownEconomy was built from scratch to be the definitive, modern answer to server economy:
 
-- 🏆 **Best auction house plugin** for Paper 1.21.1, cleaner, faster, and more configurable than anything else
+- 🏆 **Best auction house plugin** for Paper, Purpur, Spigot, and Bukkit 1.21.1, cleaner, faster, and more configurable than anything else
 - 🎨 **100% customizable** - every GUI title, filler material, button icon, message, price limit, tax rate, and border element
 - ⚡ **Simple & lightweight** - drop-in install, zero database setup required, fully running in under 5 minutes
 - 🏦 **Vault-compatible** - seamless integration with EssentialsX, GemsEconomy, CMI, and every Vault economy plugin
@@ -38,7 +46,7 @@ Every other auction house plugin for Paper either looks outdated, barely configu
 
 ## 🏛️ Auction House Features
 
-> The most polished, feature-rich, and player-friendly AH plugin available for Paper 1.21.1.
+> The most polished, feature-rich, and player-friendly AH plugin available for 1.21.1 servers.
 
 ### 🖥️ GUI & Browsing
 - **Clean centered browsing GUI** - readable layout with no clutter
@@ -71,7 +79,7 @@ Every other auction house plugin for Paper either looks outdated, barely configu
 ## 🔌 Dependencies
 
 ### Required
-- **Paper 1.21.1** or a compatible Paper fork
+- **Paper, Purpur, Spigot, or Bukkit 1.21.1** or a compatible fork
 - **Vault**
 - **A Vault-compatible economy plugin**
 
@@ -97,6 +105,8 @@ Every other auction house plugin for Paper either looks outdated, barely configu
 | **Vault** | ✅ **Required** | Economy bridge for balance, withdraw, and deposit |
 | **Paper 1.21.1** | ✅ **Required** | Primary supported platform |
 | **Purpur** | ✅ Compatible | Paper fork fully supported |
+| **Spigot 1.21.1** | ✅ Compatible | Bukkit/Spigot API supported |
+| **Bukkit 1.21.1** | ✅ Compatible | Bukkit API supported |
 | **LuckPerms** | ⭐ Recommended | Per-rank listing slot tiers |
 | **EssentialsX Economy** | ✅ Full support | Via Vault |
 | **GemsEconomy** | ✅ Full support | Via Vault |
@@ -196,7 +206,7 @@ auction-house:
 
 > ⏱️ Up and running in under 5 minutes.
 
-1. 🖥️ Ensure you're running **Paper 1.21.1** or a compatible fork like Purpur
+1. 🖥️ Ensure you're running **Paper, Purpur, Spigot, or Bukkit 1.21.1** or a compatible fork
 2. 🏦 Install **Vault** and a Vault economy plugin such as EssentialsX Economy, GemsEconomy, or CMI Economy
 3. 🔐 *(Recommended)* Install **LuckPerms** for rank-based listing limits
 4. 📂 Drop `CrownEconomy.jar` into your `/plugins/` folder
@@ -258,7 +268,7 @@ auction-house:
 
 ### 🐛 Bug Reports
 When reporting a bug, please include:
-- 📄 Your Paper version (`/version`)
+- 📄 Your server version (`/version`)
 - 🔢 Your CrownEconomy version (`/ce version`)
 - 📋 Any relevant errors from your server console
 
@@ -270,4 +280,4 @@ CrownEconomy is a **premium resource**. You may install and use it on your own s
 
 ---
 
-*🏗️ Built for Paper 1.21.1 · ⚠️ Requires Vault · ⭐ Recommends LuckPerms · ✅ Compatible with EssentialsX, GemsEconomy, CMI, and all Vault economy plugins*
+*🏗️ Built for Paper, Purpur, Spigot, and Bukkit 1.21.1 · ⚠️ Requires Vault · ⭐ Recommends LuckPerms · ✅ Compatible with EssentialsX, GemsEconomy, CMI, and all Vault economy plugins*
