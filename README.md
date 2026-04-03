@@ -3,7 +3,7 @@
 > **The best economy plugin for Paper servers.** Premium auction house, stunning GUIs, 100% customizable. Built for survival, SMP, factions, and RPG servers.
 
 <p align="center">
-  <img src="https://ibb.co/C3VkLk9s" alt="CrownEconomy Logo" width="420" />
+  <img src="assets/crown_economy_plugin_banner.svg" alt="CrownEconomy Logo" width="720" />
 </p>
 
 ![paper](https://img.shields.io/badge/Paper-1.21.1+-7fb2ff?style=flat-square)
