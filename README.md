@@ -12,8 +12,6 @@
   <img alt="Spigot / Bukkit Compatible" src="https://img.shields.io/badge/Spigot%20%2F%20Bukkit-Compatible-00a2ff?style=for-the-badge" />
 </p>
 
-![paper](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/paper_vector.svg)
-![purpur](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/purpur_vector.svg)
 [![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_vector.svg)](https://github.com/FrostedGuy0/CrownEconomy)
 [![hangar](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/hangar_vector.svg)](https://hangar.papermc.io/FrostedGuy/CrownEconomy)
 [![discord-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/social/discord-plural_vector.svg)](https://discord.gg/cCUVWxcuAw)
