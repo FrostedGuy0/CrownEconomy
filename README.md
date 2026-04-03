@@ -11,6 +11,9 @@
 ![luckperms](https://img.shields.io/badge/LuckPerms-Recommended-8e6cff?style=flat-square)
 ![yaml](https://img.shields.io/badge/Data-YAML-4caf50?style=flat-square)
 [![discord-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/social/discord-plural_vector.svg)](https://discord.gg/cCUVWxcuAw)
+![paper](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/paper_vector.svg)
+[![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_vector.svg)](https://github.com/FrostedGuy0/CrownEconomy)
+[![hangar](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/hangar_vector.svg)](https://hangar.papermc.io/FrostedGuy/CrownEconomy)
 
 **CrownEconomy** is the best economy plugin and best auction house plugin for Paper 1.21.1 Minecraft servers. If you're looking for a simple, powerful, and 100% customizable economy suite that your players will actually enjoy, you've found it.
 
