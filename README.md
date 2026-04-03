@@ -7,6 +7,7 @@
 </p>
 
 <p align="center">
+  <img alt="Paper Compatible" src="https://img.shields.io/badge/Paper-Compatible-8b5cf6?style=for-the-badge" />
   <img alt="Purpur Compatible" src="https://img.shields.io/badge/Purpur-Compatible-ff9f00?style=for-the-badge" />
   <img alt="Spigot / Bukkit Compatible" src="https://img.shields.io/badge/Spigot%20%2F%20Bukkit-Compatible-00a2ff?style=for-the-badge" />
 </p>
