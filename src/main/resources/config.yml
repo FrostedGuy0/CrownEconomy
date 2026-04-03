@@ -1,0 +1,159 @@
+general:
+  prefix: "&8[&bCrown &3Economy&8] &r"
+  currency-symbol: "$"
+  decimal-places: 2
+  date-format: "MM/dd/yyyy HH:mm"
+
+auction-house:
+  enabled: true
+  # 0 = unlimited.
+  max-auction-house-listings: 0
+  # 0 = unlimited.
+  max-transaction-history: 0
+  max-price: 1000000.0
+  min-price: 1.0
+  # Set to 0 for permanent listings.
+  default-duration-hours: 0
+  # Set to 0 to remove the cap.
+  max-duration-hours: 168
+  tax-rate: 5.0
+  auto-save-seconds: 60
+  expiry-check-seconds: 60
+  return-check-seconds: 60
+
+  listing-limits:
+    - permission: "crowneconomy.admin"
+      limit: 100
+    - permission: "crowneconomy.ah.maxlistings.mvp"
+      limit: 20
+    - permission: "crowneconomy.ah.maxlistings.vip"
+      limit: 10
+    - permission: "default"
+      limit: 5
+
+  blacklisted-materials:
+    - AIR
+    - BEDROCK
+    - BARRIER
+    - COMMAND_BLOCK
+    - CHAIN_COMMAND_BLOCK
+    - REPEATING_COMMAND_BLOCK
+    - STRUCTURE_BLOCK
+    - JIGSAW
+
+  categories:
+    enabled: true
+    list:
+      - name: "All"
+        icon: COMPASS
+        match-all: true
+      - name: "Weapons"
+        icon: DIAMOND_SWORD
+        materials:
+          - WOODEN_SWORD
+          - STONE_SWORD
+          - IRON_SWORD
+          - GOLDEN_SWORD
+          - DIAMOND_SWORD
+          - NETHERITE_SWORD
+          - BOW
+          - CROSSBOW
+          - TRIDENT
+        keywords:
+          - SWORD
+          - BOW
+          - CROSSBOW
+          - TRIDENT
+      - name: "Armor"
+        icon: DIAMOND_CHESTPLATE
+        materials:
+          - LEATHER_HELMET
+          - LEATHER_CHESTPLATE
+          - LEATHER_LEGGINGS
+          - LEATHER_BOOTS
+          - CHAINMAIL_HELMET
+          - CHAINMAIL_CHESTPLATE
+          - CHAINMAIL_LEGGINGS
+          - CHAINMAIL_BOOTS
+          - IRON_HELMET
+          - IRON_CHESTPLATE
+          - IRON_LEGGINGS
+          - IRON_BOOTS
+          - DIAMOND_HELMET
+          - DIAMOND_CHESTPLATE
+          - DIAMOND_LEGGINGS
+          - DIAMOND_BOOTS
+          - NETHERITE_HELMET
+          - NETHERITE_CHESTPLATE
+          - NETHERITE_LEGGINGS
+          - NETHERITE_BOOTS
+        keywords:
+          - HELMET
+          - CHESTPLATE
+          - LEGGINGS
+          - BOOTS
+      - name: "Tools"
+        icon: IRON_PICKAXE
+        materials:
+          - WOODEN_PICKAXE
+          - STONE_PICKAXE
+          - IRON_PICKAXE
+          - GOLDEN_PICKAXE
+          - DIAMOND_PICKAXE
+          - NETHERITE_PICKAXE
+          - WOODEN_AXE
+          - STONE_AXE
+          - IRON_AXE
+          - GOLDEN_AXE
+          - DIAMOND_AXE
+          - NETHERITE_AXE
+          - WOODEN_SHOVEL
+          - STONE_SHOVEL
+          - IRON_SHOVEL
+          - GOLDEN_SHOVEL
+          - DIAMOND_SHOVEL
+          - NETHERITE_SHOVEL
+          - FISHING_ROD
+          - FLINT_AND_STEEL
+          - SHEARS
+        keywords:
+          - PICKAXE
+          - AXE
+          - SHOVEL
+          - HOE
+          - ROD
+          - SHEARS
+      - name: "Resources"
+        icon: DIAMOND
+        materials:
+          - DIAMOND
+          - EMERALD
+          - GOLD_INGOT
+          - IRON_INGOT
+          - NETHERITE_INGOT
+          - COAL
+          - REDSTONE
+          - LAPIS_LAZULI
+          - AMETHYST_SHARD
+        keywords:
+          - INGOT
+          - GEM
+          - SHARD
+      - name: "Food"
+        icon: COOKED_BEEF
+        keywords:
+          - BEEF
+          - PORKCHOP
+          - CHICKEN
+          - MUTTON
+          - RABBIT
+          - COD
+          - SALMON
+          - BREAD
+          - APPLE
+          - CARROT
+          - POTATO
+      - name: "Blocks"
+        icon: GRASS_BLOCK
+        keywords:
+          - BLOCK

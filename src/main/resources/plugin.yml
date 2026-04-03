@@ -1,0 +1,48 @@
+name: CrownEconomy
+version: '${project.version}'
+main: dev.crown.economy.CrownEconomy
+api-version: '1.21'
+description: A configurable Paper auction house plugin with a clean centered GUI.
+author: CrownDev
+
+depend:
+  - Vault
+
+commands:
+  ah:
+    description: Open the Auction House
+    usage: /ah <help|sell|search|mylistings|cancel|refresh>
+    aliases: [auctionhouse]
+  crowneconomy:
+    description: Main Crown Economy command
+    usage: /ce <help|reload|refresh|version>
+    aliases: [ce, ceconomy]
+
+permissions:
+  crowneconomy.ah.open:
+    description: Allows opening the Auction House
+    default: true
+  crowneconomy.ah.sell:
+    description: Allows selling items on the Auction House
+    default: true
+  crowneconomy.ah.bid:
+    description: Allows bidding on Auction House items
+    default: true
+  crowneconomy.ah.cancel:
+    description: Allows cancelling own listings
+    default: true
+  crowneconomy.ah.cancel.others:
+    description: Allows cancelling other players' listings (admin)
+    default: op
+  crowneconomy.admin:
+    description: Full admin access to Crown Economy
+    default: op
+  crowneconomy.reload:
+    description: Allows reloading the plugin configuration
+    default: op
+  crowneconomy.refresh:
+    description: Allows refreshing the plugin
+    default: op
+  crowneconomy.ah.search:
+    description: Allows searching the Auction House
+    default: true
