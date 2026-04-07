@@ -1,12 +1,14 @@
 name: CrownEconomy
 version: '${project.version}'
 main: dev.crown.economy.CrownEconomy
-api-version: '1.21'
-description: A configurable Paper auction house plugin with a clean centered GUI.
+api-version: '1.21.8'
+description: A configurable Bukkit/Spigot/Purpur auction house plugin with a clean centered GUI.
 author: CrownDev
 
 depend:
   - Vault
+softdepend:
+  - Multiverse-Core
 
 commands:
   ah:

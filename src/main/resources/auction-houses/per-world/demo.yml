@@ -1,0 +1,47 @@
+# CrownEconomy PER_WORLD demo auction file.
+# This file keeps a normal file name, but it stays ignored while options.enabled is false.
+# Turn options.enabled to true only if you want this exact demo file to be loaded.
+options:
+  enabled: false
+  mode: PER_WORLD
+  demo-file: true
+  description: "Example per-world auction file. Each world gets its own isolated auction house in PER_WORLD mode."
+  how-to-use:
+    - "Keep this file disabled if you only want it as a reference."
+    - "Turn enabled to true to let the plugin load this demo file."
+    - "For a real world, change scope.key and scope.world-name to match the world name."
+  linked-config-example:
+    auction-house:
+      mode: PER_WORLD
+      default-world-settings:
+        enabled: true
+      worlds:
+        spawn:
+          enabled: false
+        world:
+          enabled: true
+        world_nether:
+          enabled: true
+        world_the_end:
+          enabled: true
+  sample-worlds:
+    - world
+    - world_nether
+    - world_the_end
+    - world2
+  example-layout:
+    notes:
+      - "The plugin writes real listings into active."
+      - "The plugin writes player history into transactions."
+      - "The plugin writes returned items into returns."
+    sample-active-key: "11111111-1111-1111-1111-111111111111"
+    sample-transaction-owner: "22222222-2222-2222-2222-222222222222"
+
+scope:
+  key: world:world_demo
+  display-name: World Demo
+  world-name: world_demo
+
+active: {}
+transactions: {}
+returns: {}

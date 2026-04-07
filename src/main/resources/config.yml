@@ -6,6 +6,41 @@ general:
 
 auction-house:
   enabled: true
+  # GLOBAL = one shared AH across all enabled worlds.
+  # PER_WORLD = every world gets its own AH file and inventory.
+  # GROUPED = worlds with the same `group` share one AH, ungrouped worlds stay isolated.
+  # If GROUPED is enabled and no explicit `group` entries are configured, standard world families
+  # like `world`, `world_nether`, and `world_the_end` will share automatically.
+  mode: GLOBAL
+  default-world-settings:
+    enabled: true
+  worlds:
+    # Example grouped setup:
+    # spawn:
+    #   enabled: false
+    # world:
+    #   enabled: true
+    #   group: survival_shared
+    # world_nether:
+    #   enabled: true
+    #   group: survival_shared
+    # world_the_end:
+    #   enabled: true
+    # world:
+    #   enabled: true
+    #   group: survival_group
+    # world_nether:
+    #   enabled: true
+    #   group: survival_group
+    # world_the_end:
+    #   enabled: true
+    #   group: survival_group
+    # world2:
+    #   enabled: true
+    #   group: world2_group
+    # world2_nether:
+    #   enabled: false
+    #   group: world2_group
   # 0 = unlimited.
   max-auction-house-listings: 0
   # 0 = unlimited.

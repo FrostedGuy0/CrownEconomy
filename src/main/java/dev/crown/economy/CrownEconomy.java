@@ -1,7 +1,7 @@
 package dev.crown.economy;
 
 import ch.irixiagroup.ilicence.ILicence;
-import dev.crown.economy.auction.AuctionManager;
+import dev.crown.economy.auction.AuctionHouseManager;
 import dev.crown.economy.commands.AuctionHouseCommand;
 import dev.crown.economy.commands.CrownEconomyCommand;
 import dev.crown.economy.config.ConfigManager;
@@ -20,7 +20,7 @@ public class CrownEconomy extends JavaPlugin {
 
     private ConfigManager configManager;
     private ILicence licence;
-    private AuctionManager auctionManager;
+    private AuctionHouseManager auctionHouseManager;
     private VaultHook vaultHook;
 
     @Override
@@ -38,9 +38,9 @@ public class CrownEconomy extends JavaPlugin {
         vaultHook = new VaultHook(this);
         vaultHook.setup();
 
-        auctionManager = new AuctionManager(this);
-        auctionManager.load();
-        Bukkit.getOnlinePlayers().forEach(player -> auctionManager.deliverPendingReturns(player));
+        auctionHouseManager = new AuctionHouseManager(this);
+        auctionHouseManager.load();
+        Bukkit.getOnlinePlayers().forEach(player -> auctionHouseManager.deliverPendingReturns(player));
 
         AuctionHouseCommand ahCommand = new AuctionHouseCommand(this);
         CrownEconomyCommand ceCommand = new CrownEconomyCommand(this);
@@ -52,6 +52,7 @@ public class CrownEconomy extends JavaPlugin {
 
         getLogger().info("Crown Economy enabled.");
         getLogger().info("Vault economy: " + (vaultHook.isEnabled() ? "connected" : "not available"));
+        getLogger().info("World resolver: " + auctionHouseManager.getWorldProviderName());
     }
 
     @Override
@@ -59,16 +60,16 @@ public class CrownEconomy extends JavaPlugin {
         if (licence != null) {
             licence.stop();
         }
-        if (auctionManager != null) {
-            auctionManager.saveAll();
+        if (auctionHouseManager != null) {
+            auctionHouseManager.saveAll();
         }
     }
 
     public void reloadPlugin() {
         configManager.loadAll();
-        if (auctionManager != null) {
-            auctionManager.reload();
-            Bukkit.getOnlinePlayers().forEach(player -> auctionManager.deliverPendingReturns(player));
+        if (auctionHouseManager != null) {
+            auctionHouseManager.reload();
+            Bukkit.getOnlinePlayers().forEach(player -> auctionHouseManager.deliverPendingReturns(player));
         }
     }
 
@@ -88,8 +89,8 @@ public class CrownEconomy extends JavaPlugin {
         return configManager;
     }
 
-    public AuctionManager getAuctionManager() {
-        return auctionManager;
+    public AuctionHouseManager getAuctionHouseManager() {
+        return auctionHouseManager;
     }
 
     public VaultHook getVaultHook() {

@@ -22,6 +22,7 @@ general:
 
 auction-house:
   disabled: "&cAH is disabled."
+  disabled-in-world: "&cAH is disabled in &f{world}&c."
   unknown-subcommand: "&cUnknown subcommand: &f{subcommand}&c. Use &e/ah help&c."
   help:
     header: "&8------------------------"

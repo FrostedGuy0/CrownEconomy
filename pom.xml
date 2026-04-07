@@ -9,8 +9,8 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Crown Economy Paper</name>
-    <description>A configurable Paper auction house plugin with a clean, centered GUI.</description>
+    <name>Crown Economy Bukkit</name>
+    <description>A configurable Bukkit/Spigot/Purpur auction house plugin with a clean, centered GUI.</description>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -20,7 +20,7 @@
 
     <repositories>
         <repository>
-            <id>papermc</id>
+            <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <repository>
@@ -30,11 +30,11 @@
     </repositories>
 
     <dependencies>
-        <!-- Paper API 1.21.1 -->
+        <!-- Paper API 1.21.8. The plugin only uses Bukkit-safe APIs so it stays Spigot compatible. -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.1-R0.1-SNAPSHOT</version>
+            <version>1.21.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -64,6 +64,9 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
+                    <excludes>
+                        <exclude>dev/nexus/**/*.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>

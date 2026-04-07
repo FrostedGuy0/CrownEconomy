@@ -12,6 +12,8 @@ main:
     all: "All"
     none: "None"
     never: "Never"
+    global-scope: "Global"
+    unknown-world: "Unknown World"
     unknown-seller: "Unknown"
     time-hours-suffix: "h"
     time-minutes-suffix: "m"
@@ -28,30 +30,35 @@ main:
       name: "&bSort"
       lore:
         - "&7Now: &f{sort}"
+        - "&7Market: &f{scope}"
     category:
       slot: 48
       material: COMPASS
       name: "&bCategories"
       lore:
         - "&7Filter: &f{category}"
+        - "&7Market: &f{scope}"
     search:
       slot: 49
       material: SPYGLASS
       name: "&bSearch"
       lore:
         - "&7Query: &f{search}"
+        - "&7Market: &f{scope}"
     refresh:
       slot: 50
       material: RECOVERY_COMPASS
       name: "&aRefresh"
       lore:
         - "&7Reload list."
+        - "&7Market: &f{scope}"
     my-listings:
       slot: 51
       material: BOOKSHELF
       name: "&bMy Listings"
       lore:
         - "&7Your listings: &f{my-count}"
+        - "&7Market: &f{scope}"
     next:
       slot: 53
       material: ARROW
@@ -64,11 +71,13 @@ main:
       - "&7Seller: &f{seller}"
       - "&7Price: &a{price}"
       - "&7Time: &e{expires}"
+      - "&7Market: &b{scope}"
       - "&7Click to buy."
   empty-state:
     material: PAPER
     name: "&eNo Listings"
     lore:
+      - "&7Market: &f{scope}"
       - "&7Try another search."
       - "&7Refresh if needed."
 
@@ -130,6 +139,7 @@ confirm:
       - "&7Seller: &f{seller}"
       - "&7Price: &a{price}"
       - "&7Tax: &c{tax}"
+      - "&7Market: &b{scope}"
 
 my-listings:
   title: "&8My Listings"
@@ -170,16 +180,19 @@ my-listings:
       name: "&aTransactions"
       lore:
         - "&7View history."
+        - "&7Market: &f{scope}"
   listing-item:
     name: "&f{item}"
     lore:
       - "&7Price: &a{price}"
       - "&7Time: &e{expires}"
+      - "&7Market: &b{scope}"
       - "&cRight click to cancel."
   empty-state:
     material: PAPER
     name: "&eNo Listings"
     lore:
+      - "&7Market: &f{scope}"
       - "&7You have none."
       - "&7Use &b/ah sell <price>&7."
 

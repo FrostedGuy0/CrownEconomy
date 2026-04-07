@@ -1,6 +1,7 @@
 package dev.crown.economy.gui;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,6 +13,7 @@ public final class GUIManager {
     private static final Map<UUID, ConfirmPurchaseGUI> openConfirms = new ConcurrentHashMap<>();
     private static final Map<UUID, AuctionCategoryGUI> openCategories = new ConcurrentHashMap<>();
     private static final Map<UUID, AuctionHouseGUI> pendingSearches = new ConcurrentHashMap<>();
+    private static final Set<UUID> suppressCloseReopen = ConcurrentHashMap.newKeySet();
 
     private GUIManager() {
     }
@@ -95,5 +97,14 @@ public final class GUIManager {
         openConfirms.remove(uuid);
         openCategories.remove(uuid);
         pendingSearches.remove(uuid);
+        suppressCloseReopen.remove(uuid);
+    }
+
+    public static void suppressNextCloseReopen(UUID uuid) {
+        suppressCloseReopen.add(uuid);
+    }
+
+    public static boolean consumeCloseReopenSuppression(UUID uuid) {
+        return suppressCloseReopen.remove(uuid);
     }
 }

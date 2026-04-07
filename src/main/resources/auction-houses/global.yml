@@ -1,0 +1,31 @@
+# CrownEconomy active auction data file for GLOBAL mode.
+# This file is used by default because config.yml ships with auction-house.mode: GLOBAL.
+# Leave options.enabled set to true so the shared global auction house stays active.
+options:
+  enabled: true
+  mode: GLOBAL
+  demo-file: false
+  description: "Default shared auction house file used by all enabled worlds while mode is GLOBAL."
+  linked-config-example:
+    auction-house:
+      mode: GLOBAL
+      default-world-settings:
+        enabled: true
+      worlds:
+        spawn:
+          enabled: false
+        world:
+          enabled: true
+        world_nether:
+          enabled: true
+        world_the_end:
+          enabled: true
+
+scope:
+  key: global
+  display-name: Global
+  world-name: ""
+
+active: {}
+transactions: {}
+returns: {}

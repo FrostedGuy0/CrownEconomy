@@ -16,6 +16,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 
 import java.util.UUID;
 
@@ -105,7 +107,7 @@ public class AuctionListener implements Listener {
         }
 
         UUID uuid = player.getUniqueId();
-        boolean playerClosed = event.getReason().name().contains("PLAYER");
+        boolean suppressReopen = GUIManager.consumeCloseReopenSuppression(uuid);
         AuctionHouseGUI ah = GUIManager.getOpenAH(uuid);
         if (ah != null && event.getInventory().equals(ah.getInventory())) {
             GUIManager.removeOpenAH(uuid);
@@ -116,7 +118,7 @@ public class AuctionListener implements Listener {
         ConfirmPurchaseGUI confirm = GUIManager.getOpenConfirm(uuid);
         if (confirm != null && event.getInventory().equals(confirm.getInventory())) {
             GUIManager.removeOpenConfirm(uuid);
-            if (playerClosed) {
+            if (!suppressReopen) {
                 confirm.reopenParent();
             }
             return;
@@ -125,7 +127,7 @@ public class AuctionListener implements Listener {
         TransactionsGUI transactions = GUIManager.getOpenTransactions(uuid);
         if (transactions != null && event.getInventory().equals(transactions.getInventory())) {
             GUIManager.removeOpenTransactions(uuid);
-            if (playerClosed) {
+            if (!suppressReopen) {
                 transactions.reopenParent();
             }
             return;
@@ -134,7 +136,7 @@ public class AuctionListener implements Listener {
         MyListingsGUI myListings = GUIManager.getOpenMyListings(uuid);
         if (myListings != null && event.getInventory().equals(myListings.getInventory())) {
             GUIManager.removeOpenMyListings(uuid);
-            if (playerClosed) {
+            if (!suppressReopen) {
                 myListings.reopenParent();
             }
             return;
@@ -143,7 +145,7 @@ public class AuctionListener implements Listener {
         AuctionCategoryGUI category = GUIManager.getOpenCategory(uuid);
         if (category != null && event.getInventory().equals(category.getInventory())) {
             GUIManager.removeOpenCategory(uuid);
-            if (playerClosed) {
+            if (!suppressReopen) {
                 category.reopenParent();
             }
         }
@@ -156,6 +158,16 @@ public class AuctionListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        Bukkit.getScheduler().runTask(plugin, () -> plugin.getAuctionManager().deliverPendingReturns(event.getPlayer()));
+        Bukkit.getScheduler().runTask(plugin, () -> plugin.getAuctionHouseManager().deliverPendingReturns(event.getPlayer()));
+    }
+
+    @EventHandler
+    public void onWorldLoad(WorldLoadEvent event) {
+        Bukkit.getScheduler().runTask(plugin, () -> plugin.getAuctionHouseManager().onWorldLoad(event.getWorld()));
+    }
+
+    @EventHandler
+    public void onWorldUnload(WorldUnloadEvent event) {
+        plugin.getAuctionHouseManager().onWorldUnload(event.getWorld());
     }
 }

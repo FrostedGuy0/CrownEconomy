@@ -42,7 +42,7 @@ public class AuctionCategoryGUI {
 
             Map<String, String> placeholders = new HashMap<>();
             placeholders.put("{category}", category.name());
-            placeholders.put("{count}", String.valueOf(plugin.getAuctionManager().getActiveListings().stream()
+            placeholders.put("{count}", String.valueOf(plugin.getAuctionHouseManager().getAccessibleListings(player).stream()
                     .filter(listing -> category.matches(listing.getItem()))
                     .count()));
             placeholders.put("{status}", isSelected
@@ -68,8 +68,8 @@ public class AuctionCategoryGUI {
             inventory.setItem(slots.get(i), item);
         }
 
-        putButton("back", Map.of());
-        putButton("refresh", Map.of());
+        putButton("back", plugin.getAuctionHouseManager().getAuctionScopePlaceholders(player));
+        putButton("refresh", plugin.getAuctionHouseManager().getAuctionScopePlaceholders(player));
     }
 
     private void putButton(String key, Map<String, String> placeholders) {
@@ -116,6 +116,7 @@ public class AuctionCategoryGUI {
 
     public void reopenParent() {
         Bukkit.getScheduler().runTask(plugin, () -> {
+            GUIManager.suppressNextCloseReopen(player.getUniqueId());
             parent.refresh();
             GUIManager.setOpenAH(player.getUniqueId(), parent);
             parent.open();

@@ -46,7 +46,7 @@ public class TransactionsGUI {
         }
         inventory.clear();
 
-        transactions = plugin.getAuctionManager().getPlayerTransactions(player.getUniqueId());
+        transactions = plugin.getAuctionHouseManager().getPlayerTransactions(player);
         List<Integer> slots = plugin.getConfigManager().getTransactionSlots();
         int slotsPerPage = slots.size();
         int totalPages = Math.max(1, (int) Math.ceil(transactions.size() / (double) slotsPerPage));
@@ -181,6 +181,7 @@ public class TransactionsGUI {
 
     public void reopenParent() {
         Bukkit.getScheduler().runTask(plugin, () -> {
+            GUIManager.suppressNextCloseReopen(player.getUniqueId());
             parent.refresh();
             GUIManager.setOpenMyListings(player.getUniqueId(), parent);
             parent.open();

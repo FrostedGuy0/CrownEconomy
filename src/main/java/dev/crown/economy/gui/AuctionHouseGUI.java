@@ -67,11 +67,10 @@ public class AuctionHouseGUI {
         }
 
         if (visibleListings.isEmpty()) {
-            Map<String, String> placeholders = Map.of(
-                    "{sort}", cfg.getSortLabel(sortMode),
-                    "{category}", getCategoryLabel(),
-                    "{search}", getSearchLabel()
-            );
+            Map<String, String> placeholders = new HashMap<>(plugin.getAuctionHouseManager().getAuctionScopePlaceholders(player));
+            placeholders.put("{sort}", cfg.getSortLabel(sortMode));
+            placeholders.put("{category}", getCategoryLabel());
+            placeholders.put("{search}", getSearchLabel());
             inventory.setItem(cfg.getMainEmptyStateSlot(), plugin.getConfigManager().createGuiItem("main.empty-state", placeholders));
         }
 
@@ -80,11 +79,11 @@ public class AuctionHouseGUI {
 
     private void buildButtons(int totalPages) {
         ConfigManager cfg = plugin.getConfigManager();
-        Map<String, String> placeholders = new HashMap<>();
+        Map<String, String> placeholders = new HashMap<>(plugin.getAuctionHouseManager().getAuctionScopePlaceholders(player));
         placeholders.put("{sort}", cfg.getSortLabel(sortMode));
         placeholders.put("{category}", getCategoryLabel());
         placeholders.put("{search}", getSearchLabel());
-        placeholders.put("{my-count}", String.valueOf(plugin.getAuctionManager().getPlayerListings(player.getUniqueId()).size()));
+        placeholders.put("{my-count}", String.valueOf(plugin.getAuctionHouseManager().getPlayerListings(player).size()));
         placeholders.put("{page}", String.valueOf(page + 1));
         placeholders.put("{pages}", String.valueOf(totalPages));
 
@@ -122,6 +121,7 @@ public class AuctionHouseGUI {
         placeholders.put("{price}", plugin.getConfigManager().formatPrice(listing.getPrice()));
         placeholders.put("{expires}", plugin.getConfigManager().formatTimeLeft(listing.getExpiresAt()));
         placeholders.put("{item}", listing.getDisplayName());
+        placeholders.put("{scope}", plugin.getConfigManager().getScopeDisplayName(listing.getScopeKey()));
         String nameTemplate = plugin.getConfigManager().getGui().getString("main.listing-item.name", "&f{item}");
         meta.setDisplayName(MessageUtil.color(applyPlaceholders(nameTemplate, placeholders)));
         for (String line : plugin.getConfigManager().getGui().getStringList("main.listing-item.lore")) {
@@ -211,7 +211,7 @@ public class AuctionHouseGUI {
     }
 
     private List<AuctionListing> getFilteredSortedListings() {
-        List<AuctionListing> listings = new ArrayList<>(plugin.getAuctionManager().getActiveListings());
+        List<AuctionListing> listings = new ArrayList<>(plugin.getAuctionHouseManager().getAccessibleListings(player));
 
         if (searchQuery != null && !searchQuery.isBlank()) {
             String query = searchQuery.toLowerCase(Locale.ROOT);

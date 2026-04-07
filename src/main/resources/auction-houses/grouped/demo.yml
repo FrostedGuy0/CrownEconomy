@@ -1,0 +1,50 @@
+# CrownEconomy GROUPED demo auction file.
+# This file keeps a normal file name, but it stays ignored while options.enabled is false.
+# Turn options.enabled to true only if you want this exact demo file to be loaded.
+options:
+  enabled: false
+  mode: GROUPED
+  demo-file: true
+  description: "Example grouped auction file. Worlds sharing the same group use one shared auction house in GROUPED mode."
+  how-to-use:
+    - "Keep this file disabled if you only want it as a reference."
+    - "Turn enabled to true to let the plugin load this demo file."
+    - "For a real group, change scope.key to group:<your_group_name>."
+  linked-config-example:
+    auction-house:
+      mode: GROUPED
+      default-world-settings:
+        enabled: true
+      worlds:
+        world:
+          enabled: true
+          group: survival_demo
+        world_nether:
+          enabled: true
+          group: survival_demo
+        world_the_end:
+          enabled: true
+          group: survival_demo
+        world2:
+          enabled: true
+          group: world2_group
+  sample-worlds:
+    - world
+    - world_nether
+    - world_the_end
+  example-layout:
+    notes:
+      - "All worlds in the same group read and write to one grouped auction file."
+      - "The plugin writes real listings into active."
+      - "The plugin writes player history into transactions."
+    sample-group-name: survival_demo
+    sample-active-key: "33333333-3333-3333-3333-333333333333"
+
+scope:
+  key: group:survival_demo
+  display-name: Survival Demo
+  world-name: world
+
+active: {}
+transactions: {}
+returns: {}

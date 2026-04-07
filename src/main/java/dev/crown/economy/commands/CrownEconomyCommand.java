@@ -43,7 +43,7 @@ public class CrownEconomyCommand implements CommandExecutor, TabCompleter {
                         .replace("{status}", plugin.getConfigManager().getMessageRaw(
                                 plugin.getVaultHook().isEnabled() ? "general.vault-connected" : "general.vault-unavailable")));
                 sender.sendMessage(plugin.getConfigManager().getMessage("general.info-listings")
-                        .replace("{count}", String.valueOf(plugin.getAuctionManager().getActiveListings().size()))
+                        .replace("{count}", String.valueOf(plugin.getAuctionHouseManager().getTotalActiveListingCount()))
                         .replace("{limit}", limit));
             }
             default -> sendHelp(sender);

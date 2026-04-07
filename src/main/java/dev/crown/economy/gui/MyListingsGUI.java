@@ -2,7 +2,7 @@ package dev.crown.economy.gui;
 
 import dev.crown.economy.CrownEconomy;
 import dev.crown.economy.auction.AuctionListing;
-import dev.crown.economy.auction.AuctionManager;
+import dev.crown.economy.auction.AuctionHouseManager;
 import dev.crown.economy.utils.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -44,7 +44,7 @@ public class MyListingsGUI {
         }
         inventory.clear();
 
-        listings = plugin.getAuctionManager().getPlayerListings(player.getUniqueId());
+        listings = plugin.getAuctionHouseManager().getPlayerListings(player);
         List<Integer> slots = plugin.getConfigManager().getMyListingSlots();
         for (int i = 0; i < slots.size(); i++) {
             int index = i;
@@ -54,11 +54,12 @@ public class MyListingsGUI {
             inventory.setItem(slots.get(i), buildListingItem(listings.get(index)));
         }
 
-        putButton("transactions", Map.of());
+        putButton("transactions", plugin.getAuctionHouseManager().getAuctionScopePlaceholders(player));
 
         if (listings.isEmpty()) {
             inventory.setItem(plugin.getConfigManager().getMyListingsEmptyStateSlot(),
-                    plugin.getConfigManager().createGuiItem("my-listings.empty-state", Map.of()));
+                    plugin.getConfigManager().createGuiItem("my-listings.empty-state",
+                            plugin.getAuctionHouseManager().getAuctionScopePlaceholders(player)));
         }
     }
 
@@ -74,6 +75,7 @@ public class MyListingsGUI {
         placeholders.put("{price}", plugin.getConfigManager().formatPrice(listing.getPrice()));
         placeholders.put("{expires}", plugin.getConfigManager().formatTimeLeft(listing.getExpiresAt()));
         placeholders.put("{item}", listing.getDisplayName());
+        placeholders.put("{scope}", plugin.getConfigManager().getScopeDisplayName(listing.getScopeKey()));
         String nameTemplate = plugin.getConfigManager().getGui().getString("my-listings.listing-item.name", "&f{item}");
         meta.setDisplayName(MessageUtil.color(applyPlaceholders(nameTemplate, placeholders)));
         for (String line : plugin.getConfigManager().getGui().getStringList("my-listings.listing-item.lore")) {
@@ -95,6 +97,7 @@ public class MyListingsGUI {
     public void handleClick(int slot, boolean rightClick) {
         if (slot == plugin.getConfigManager().getButtonSlot("my-listings", "transactions")) {
             Bukkit.getScheduler().runTask(plugin, () -> {
+                GUIManager.suppressNextCloseReopen(player.getUniqueId());
                 TransactionsGUI gui = new TransactionsGUI(plugin, player, this);
                 GUIManager.setOpenTransactions(player.getUniqueId(), gui);
                 gui.open();
@@ -108,10 +111,10 @@ public class MyListingsGUI {
                 int index = i;
                 if (index < listings.size() && rightClick) {
                     AuctionListing listing = listings.get(index);
-                    AuctionManager.CancelResult result = plugin.getAuctionManager().cancelListing(player, listing.getId(), false);
-                    if (result == AuctionManager.CancelResult.SUCCESS) {
+                    AuctionHouseManager.CancelResult result = plugin.getAuctionHouseManager().cancelListing(player, listing.getId(), false);
+                    if (result == AuctionHouseManager.CancelResult.SUCCESS) {
                         player.sendMessage(plugin.getConfigManager().getMessage("auction-house.listing-cancelled"));
-                    } else if (result == AuctionManager.CancelResult.NOT_OWNER) {
+                    } else if (result == AuctionHouseManager.CancelResult.NOT_OWNER) {
                         player.sendMessage(plugin.getConfigManager().getMessage("auction-house.not-owner"));
                     } else {
                         player.sendMessage(plugin.getConfigManager().getMessage("auction-house.listing-id-invalid"));
@@ -126,6 +129,7 @@ public class MyListingsGUI {
 
     public void reopenParent() {
         Bukkit.getScheduler().runTask(plugin, () -> {
+            GUIManager.suppressNextCloseReopen(player.getUniqueId());
             parent.refresh();
             GUIManager.setOpenAH(player.getUniqueId(), parent);
             parent.open();

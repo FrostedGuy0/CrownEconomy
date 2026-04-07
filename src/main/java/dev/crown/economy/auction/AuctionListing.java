@@ -1,6 +1,7 @@
 package dev.crown.economy.auction;
 
 import dev.crown.economy.CrownEconomy;
+import dev.crown.economy.config.AuctionWorldScope;
 import dev.crown.economy.utils.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -10,6 +11,7 @@ import java.util.UUID;
 public final class AuctionListing {
 
     private final UUID id;
+    private final String scopeKey;
     private final UUID sellerUUID;
     private final String sellerName;
     private final ItemStack item;
@@ -19,7 +21,11 @@ public final class AuctionListing {
     private boolean sold;
 
     public AuctionListing(UUID sellerUUID, String sellerName, ItemStack item, double price, int durationHours) {
-        this(UUID.randomUUID(), sellerUUID, sellerName, item, price,
+        this(AuctionWorldScope.GLOBAL_SCOPE_KEY, sellerUUID, sellerName, item, price, durationHours);
+    }
+
+    public AuctionListing(String scopeKey, UUID sellerUUID, String sellerName, ItemStack item, double price, int durationHours) {
+        this(UUID.randomUUID(), scopeKey, sellerUUID, sellerName, item, price,
                 System.currentTimeMillis(),
                 durationHours <= 0 ? -1L : System.currentTimeMillis() + (durationHours * 3_600_000L),
                 false);
@@ -27,7 +33,13 @@ public final class AuctionListing {
 
     public AuctionListing(UUID id, UUID sellerUUID, String sellerName, ItemStack item,
                           double price, long listedAt, long expiresAt, boolean sold) {
+        this(id, AuctionWorldScope.GLOBAL_SCOPE_KEY, sellerUUID, sellerName, item, price, listedAt, expiresAt, sold);
+    }
+
+    public AuctionListing(UUID id, String scopeKey, UUID sellerUUID, String sellerName, ItemStack item,
+                          double price, long listedAt, long expiresAt, boolean sold) {
         this.id = id;
+        this.scopeKey = AuctionWorldScope.normalizeScopeKey(scopeKey);
         this.sellerUUID = sellerUUID;
         this.sellerName = sellerName;
         this.item = item == null ? new ItemStack(Material.AIR) : item.clone();
@@ -79,6 +91,10 @@ public final class AuctionListing {
         return sellerUUID;
     }
 
+    public String getScopeKey() {
+        return scopeKey;
+    }
+
     public String getSellerName() {
         return sellerName;
     }
@@ -101,6 +117,10 @@ public final class AuctionListing {
 
     public boolean isSold() {
         return sold;
+    }
+
+    public boolean isGlobalScope() {
+        return AuctionWorldScope.isGlobalScope(scopeKey);
     }
 
     public String getDisplayName() {

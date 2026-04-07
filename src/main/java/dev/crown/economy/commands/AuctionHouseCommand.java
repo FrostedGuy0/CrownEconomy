@@ -2,7 +2,7 @@ package dev.crown.economy.commands;
 
 import dev.crown.economy.CrownEconomy;
 import dev.crown.economy.auction.AuctionListing;
-import dev.crown.economy.auction.AuctionManager;
+import dev.crown.economy.auction.AuctionHouseManager;
 import dev.crown.economy.gui.AuctionHouseGUI;
 import dev.crown.economy.gui.AuctionCategoryGUI;
 import dev.crown.economy.gui.GUIManager;
@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
@@ -42,8 +43,7 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        if (!plugin.getConfigManager().isAHEnabled()) {
-            player.sendMessage(plugin.getConfigManager().getMessage("auction-house.disabled"));
+        if (!ensureAuctionAvailable(player)) {
             return true;
         }
 
@@ -109,7 +109,7 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
         }
 
         ItemStack toList = hand.clone();
-        AuctionManager.ListResult result = plugin.getAuctionManager().listItem(player, toList, price);
+        AuctionHouseManager.ListResult result = plugin.getAuctionHouseManager().listItem(player, toList, price);
         switch (result) {
             case SUCCESS -> {
                 player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
@@ -117,6 +117,7 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                         .replace("{item}", MessageUtil.getItemName(toList))
                         .replace("{price}", plugin.getConfigManager().formatPrice(price)));
             }
+            case WORLD_DISABLED -> sendWorldDisabled(player);
             case BLACKLISTED -> player.sendMessage(plugin.getConfigManager().getMessage("auction-house.listing-failed-blacklist"));
             case GLOBAL_MAX_REACHED -> player.sendMessage(plugin.getConfigManager().getMessage("auction-house.listing-failed-global-max")
                     .replace("{max}", String.valueOf(plugin.getConfigManager().getGlobalMaxListings())));
@@ -172,17 +173,17 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        UUID listingId = resolveListingId(args[1]);
+        boolean admin = player.hasPermission("crowneconomy.ah.cancel.others") || player.hasPermission("crowneconomy.admin");
+        UUID listingId = resolveListingId(player, args[1], admin);
         if (listingId == null) {
             player.sendMessage(plugin.getConfigManager().getMessage("auction-house.listing-id-invalid"));
             return;
         }
 
-        boolean admin = player.hasPermission("crowneconomy.ah.cancel.others") || player.hasPermission("crowneconomy.admin");
-        AuctionManager.CancelResult result = plugin.getAuctionManager().cancelListing(player, listingId, admin);
-        if (result == AuctionManager.CancelResult.SUCCESS) {
+        AuctionHouseManager.CancelResult result = plugin.getAuctionHouseManager().cancelListing(player, listingId, admin);
+        if (result == AuctionHouseManager.CancelResult.SUCCESS) {
             player.sendMessage(plugin.getConfigManager().getMessage("auction-house.listing-cancelled"));
-        } else if (result == AuctionManager.CancelResult.NOT_OWNER) {
+        } else if (result == AuctionHouseManager.CancelResult.NOT_OWNER) {
             player.sendMessage(plugin.getConfigManager().getMessage("auction-house.not-owner"));
         } else {
             player.sendMessage(plugin.getConfigManager().getMessage("auction-house.listing-id-invalid"));
@@ -229,18 +230,42 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
             player.sendMessage(plugin.getConfigManager().getMessage("general.no-permission"));
             return;
         }
+        if (!ensureAuctionAvailable(player)) {
+            return;
+        }
         AuctionHouseGUI gui = new AuctionHouseGUI(plugin, player);
         GUIManager.setOpenAH(player.getUniqueId(), gui);
         gui.open();
     }
 
-    private UUID resolveListingId(String input) {
-        return plugin.getAuctionManager().getActiveListings().stream()
+    private UUID resolveListingId(Player player, String input, boolean admin) {
+        List<AuctionListing> listings = admin
+                ? plugin.getAuctionHouseManager().getActiveListings()
+                : plugin.getAuctionHouseManager().getAccessibleListings(player);
+        return listings.stream()
                 .filter(listing -> listing.getId().toString().equalsIgnoreCase(input)
                         || listing.getId().toString().startsWith(input))
                 .map(AuctionListing::getId)
                 .findFirst()
                 .orElse(null);
+    }
+
+    private boolean ensureAuctionAvailable(Player player) {
+        if (!plugin.getConfigManager().isAHEnabled()) {
+            player.sendMessage(plugin.getConfigManager().getMessage("auction-house.disabled"));
+            return false;
+        }
+        if (!plugin.getAuctionHouseManager().isEnabled(player.getWorld())) {
+            sendWorldDisabled(player);
+            return false;
+        }
+        return true;
+    }
+
+    private void sendWorldDisabled(Player player) {
+        Map<String, String> placeholders = plugin.getAuctionHouseManager().getAuctionScopePlaceholders(player);
+        placeholders.put("{world}", player.getWorld().getName());
+        player.sendMessage(plugin.getConfigManager().getMessage("auction-house.disabled-in-world", placeholders));
     }
 
     @Override
