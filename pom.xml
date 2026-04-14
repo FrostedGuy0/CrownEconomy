@@ -30,7 +30,6 @@
     </repositories>
 
     <dependencies>
-        <!-- Paper API 1.21.8. The plugin only uses Bukkit-safe APIs so it stays Spigot compatible. -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -38,7 +37,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Vault -->
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
