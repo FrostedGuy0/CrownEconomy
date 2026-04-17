@@ -3,7 +3,7 @@
 > **The best economy plugin for Paper, Purpur, Spigot, and Bukkit servers.** Premium auction house, stunning GUIs, 100% customizable. Built for survival, SMP, factions, and RPG servers.
 
 <p align="center">
-  <img src="assets/crown_economy_plugin_banner.svg" alt="CrownEconomy Logo" width="720" />
+  <img src="assets/crown_economy_plugin_banner.png" alt="CrownEconomy Logo" width="720" />
 </p>
 
 <p align="center">

@@ -55,7 +55,7 @@ auction-house:
   invalid-price: "&cInvalid price."
   no-item-hand: "&cHold an item first."
   listing-id-invalid: "&cInvalid listing ID."
-  search-prompt: "&eType your search. &7cancel &eto stop."
+  search-prompt: "&eEnter your search on the sign. Leave it blank to clear, or type &7cancel &eto keep the current search."
   search-cancelled: "&eSearch cancelled."
   search-applied: "&aSearch: &f{query}"
   search-cleared: "&aSearch cleared."

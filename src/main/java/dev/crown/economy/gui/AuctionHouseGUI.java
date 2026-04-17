@@ -38,7 +38,6 @@ public class AuctionHouseGUI {
 
     public void open() {
         GUIManager.setOpenAH(player.getUniqueId(), this);
-        GUIManager.removePendingSearch(player.getUniqueId());
         player.openInventory(inventory);
     }
 
@@ -170,8 +169,7 @@ public class AuctionHouseGUI {
         }
 
         if (slot == cfg.getButtonSlot("main", "search")) {
-            GUIManager.setPendingSearch(player.getUniqueId(), this);
-            player.sendMessage(cfg.getMessage("auction-house.search-prompt"));
+            plugin.getSearchInputManager().openSearchInput(player, this);
             return;
         }
 

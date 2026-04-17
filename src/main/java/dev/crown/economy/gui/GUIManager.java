@@ -12,7 +12,6 @@ public final class GUIManager {
     private static final Map<UUID, TransactionsGUI> openTransactions = new ConcurrentHashMap<>();
     private static final Map<UUID, ConfirmPurchaseGUI> openConfirms = new ConcurrentHashMap<>();
     private static final Map<UUID, AuctionCategoryGUI> openCategories = new ConcurrentHashMap<>();
-    private static final Map<UUID, AuctionHouseGUI> pendingSearches = new ConcurrentHashMap<>();
     private static final Set<UUID> suppressCloseReopen = ConcurrentHashMap.newKeySet();
 
     private GUIManager() {
@@ -78,25 +77,12 @@ public final class GUIManager {
         openCategories.remove(uuid);
     }
 
-    public static void setPendingSearch(UUID uuid, AuctionHouseGUI gui) {
-        pendingSearches.put(uuid, gui);
-    }
-
-    public static AuctionHouseGUI getPendingSearch(UUID uuid) {
-        return pendingSearches.get(uuid);
-    }
-
-    public static void removePendingSearch(UUID uuid) {
-        pendingSearches.remove(uuid);
-    }
-
     public static void clearAll(UUID uuid) {
         openAHGuis.remove(uuid);
         openMyListings.remove(uuid);
         openTransactions.remove(uuid);
         openConfirms.remove(uuid);
         openCategories.remove(uuid);
-        pendingSearches.remove(uuid);
         suppressCloseReopen.remove(uuid);
     }
 

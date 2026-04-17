@@ -111,7 +111,6 @@ public class AuctionListener implements Listener {
         AuctionHouseGUI ah = GUIManager.getOpenAH(uuid);
         if (ah != null && event.getInventory().equals(ah.getInventory())) {
             GUIManager.removeOpenAH(uuid);
-            GUIManager.removePendingSearch(uuid);
             return;
         }
 
