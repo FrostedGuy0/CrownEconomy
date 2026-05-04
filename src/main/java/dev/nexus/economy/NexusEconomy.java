@@ -24,11 +24,9 @@ public class NexusEconomy extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        // Initialize config
         configManager = new ConfigManager(this);
         configManager.loadAll();
 
-        // Setup hooks
         vaultHook = new VaultHook(this);
         if (!vaultHook.setup()) {
             getLogger().severe("Vault not found! Economy features will not work.");
@@ -38,15 +36,12 @@ public class NexusEconomy extends JavaPlugin {
         luckPermsHook = new LuckPermsHook(this);
         luckPermsHook.setup();
 
-        // Initialize managers
         auctionManager = new AuctionManager(this);
         auctionManager.load();
 
-        // Register commands
         getCommand("ah").setExecutor(new AuctionHouseCommand(this));
         getCommand("nexuseconomy").setExecutor(new NexusEconomyCommand(this));
 
-        // Register listeners
         getServer().getPluginManager().registerEvents(new AuctionListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatInputListener(this), this);
 

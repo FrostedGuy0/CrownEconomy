@@ -13,13 +13,6 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Confirm Purchase GUI (3 rows)
- *
- *  [ border ] [ item display ] [ border ]
- *  [ border ] [ confirm: YES ] [ space ] [ confirm: NO ] [ border ]
- *  [ border ] [ border ] [ border ]
- */
 public class ConfirmPurchaseGUI {
 
     private final NexusEconomy plugin;
@@ -46,7 +39,6 @@ public class ConfirmPurchaseGUI {
     private void build() {
         GuiUtil.fillBorder(inventory, Material.GRAY_STAINED_GLASS_PANE);
 
-        // Display the item being purchased
         var display = listing.getItem().clone();
         var meta = display.getItemMeta();
         if (meta != null) {
@@ -66,7 +58,6 @@ public class ConfirmPurchaseGUI {
         }
         inventory.setItem(SLOT_ITEM, display);
 
-        // Confirm button
         inventory.setItem(SLOT_CONFIRM, GuiUtil.makeGlowItem(
                 Material.LIME_STAINED_GLASS_PANE,
                 "&a✔ Confirm Purchase",
@@ -74,7 +65,6 @@ public class ConfirmPurchaseGUI {
                 "&7for &a$" + MessageUtil.formatPrice(listing.getPrice())
         ));
 
-        // Cancel button
         inventory.setItem(SLOT_CANCEL, GuiUtil.makeItem(
                 Material.RED_STAINED_GLASS_PANE,
                 "&c✘ Cancel",
@@ -104,7 +94,7 @@ public class ConfirmPurchaseGUI {
                         plugin.getConfigManager().getMessage("auction-house.not-enough-money")
                                 .replace("{price}", "$" + MessageUtil.formatPrice(listing.getPrice())));
             }
-            // Reopen main AH after purchase
+            
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 parent.refresh();
                 GUIManager.setOpenAH(player.getUniqueId(), parent);

@@ -15,21 +15,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Main Auction House browsing GUI.
- *
- * Layout (6 rows = 54 slots):
- * Row 0 (0-8):   Top border + info
- * Rows 1-4 (9-44): Item listings (4 rows × 7 items = 28 per page)
- * Row 5 (45-53): Bottom nav bar
- *
- *  [ ← ][ SORT ][ CAT ][ SEARCH ][ INFO ][ MY LISTINGS ][ EXPIRED ][ → ]
- */
 public class AuctionHouseGUI {
 
-    // Slot layout for items (4 rows × 7 cols, centered in the inner area)
-    // Row 1 (slots 9-17), Row 2 (18-26), Row 3 (27-35), Row 4 (36-44)
-    // We use all 9 columns minus borders (col 0 and col 8) = 7 items per row, centred
     private static final int[] ITEM_SLOTS = {
         10,11,12,13,14,15,16,
         19,20,21,22,23,24,25,
@@ -38,7 +25,6 @@ public class AuctionHouseGUI {
     };
     private static final int ITEMS_PER_PAGE = ITEM_SLOTS.length;
 
-    // Nav slots (row 5)
     private static final int SLOT_PREV    = 45;
     private static final int SLOT_SORT    = 46;
     private static final int SLOT_CAT     = 47;
@@ -94,7 +80,6 @@ public class AuctionHouseGUI {
         Material filler = parseMaterial(cfg.getFillerMaterial(), Material.BLACK_STAINED_GLASS_PANE);
         GuiUtil.fillBorder(inventory, filler);
 
-        // Place listing items
         int start = page * ITEMS_PER_PAGE;
         for (int i = 0; i < ITEM_SLOTS.length; i++) {
             int listingIdx = start + i;
@@ -103,7 +88,6 @@ public class AuctionHouseGUI {
             }
         }
 
-        // Nav bar
         buildNavBar();
     }
 
@@ -112,14 +96,12 @@ public class AuctionHouseGUI {
         boolean hasNext = (page + 1) * ITEMS_PER_PAGE < listings.size();
         boolean hasPrev = page > 0;
 
-        // Prev page
         inventory.setItem(SLOT_PREV, GuiUtil.makeItem(
                 hasPrev ? Material.ARROW : Material.BLACK_STAINED_GLASS_PANE,
                 hasPrev ? "&b← Previous Page" : "&8← Previous Page",
                 hasPrev ? "&7Page &f" + page + " &7→ &f" + (page) : "&8No previous page"
         ));
 
-        // Sort
         inventory.setItem(SLOT_SORT, GuiUtil.makeItem(
                 Material.HOPPER,
                 "&bSort: &f" + sortMode.label,
@@ -127,7 +109,6 @@ public class AuctionHouseGUI {
                 "&8Current: &e" + sortMode.label
         ));
 
-        // Category
         String catLabel = categoryFilter == null ? "All" : categoryFilter;
         inventory.setItem(SLOT_CAT, GuiUtil.makeItem(
                 Material.COMPASS,
@@ -135,7 +116,6 @@ public class AuctionHouseGUI {
                 "&7Click to filter by category"
         ));
 
-        // Search
         String searchLabel = searchQuery == null ? "&7None" : "&f" + searchQuery;
         inventory.setItem(SLOT_SEARCH, GuiUtil.makeItem(
                 Material.SPYGLASS,
@@ -144,7 +124,6 @@ public class AuctionHouseGUI {
                 "&7Click to search listings"
         ));
 
-        // Info
         int total = plugin.getAuctionManager().getActiveListings().size();
         int myListings = plugin.getAuctionManager().getPlayerListings(player.getUniqueId()).size();
         String tier = plugin.getLuckPermsHook().getListingTier(player);
@@ -157,7 +136,6 @@ public class AuctionHouseGUI {
                 "&7Tax rate: &f" + cfg.getTaxRate() + "%"
         ));
 
-        // My Listings
         inventory.setItem(SLOT_MY_LIST, GuiUtil.makeItem(
                 Material.CHEST,
                 "&bMy Listings",
@@ -165,7 +143,6 @@ public class AuctionHouseGUI {
                 "&7You have &f" + myListings + " &7active listing(s)"
         ));
 
-        // Expired
         int expiredCount = plugin.getAuctionManager().getExpiredBin(player.getUniqueId()).size();
         inventory.setItem(SLOT_EXPIRED, expiredCount > 0
                 ? GuiUtil.makeGlowItem(Material.ENDER_CHEST,
@@ -177,7 +154,6 @@ public class AuctionHouseGUI {
                         "&7No expired items to collect")
         );
 
-        // Next page
         inventory.setItem(SLOT_NEXT, GuiUtil.makeItem(
                 hasNext ? Material.ARROW : Material.BLACK_STAINED_GLASS_PANE,
                 hasNext ? "&bNext Page →" : "&8Next Page →",
@@ -194,7 +170,7 @@ public class AuctionHouseGUI {
         meta.setDisplayName(MessageUtil.color("&f" + itemName));
 
         List<String> lore = new ArrayList<>();
-        // Original lore if any
+        
         List<String> original = meta.getLore();
         if (original != null && !original.isEmpty()) {
             lore.addAll(original);
@@ -213,8 +189,6 @@ public class AuctionHouseGUI {
         return display;
     }
 
-    // ── Actions ──────────────────────────────────────────────
-
     public void handleClick(int slot, boolean leftClick) {
         if (slot == SLOT_PREV) {
             if (page > 0) { page--; refresh(); }
@@ -230,7 +204,7 @@ public class AuctionHouseGUI {
             refresh();
             player.sendMessage(plugin.getConfigManager().getMessage("auction-house.no-listings")
                     .replace(plugin.getConfigManager().getMessage("auction-house.no-listings"), ""));
-            // Just refresh silently
+            
             return;
         }
         if (slot == SLOT_CAT) {
@@ -242,7 +216,7 @@ public class AuctionHouseGUI {
         }
         if (slot == SLOT_SEARCH) {
             player.closeInventory();
-            plugin.getAuctionManager(); // keep ref
+            plugin.getAuctionManager(); 
             GUIManager.setPendingSearch(player.getUniqueId(), this);
             player.sendMessage(plugin.getConfigManager().getMessage("auction-house.search-prompt"));
             return;
@@ -266,7 +240,6 @@ public class AuctionHouseGUI {
             return;
         }
 
-        // Check if clicked a listing item
         for (int i = 0; i < ITEM_SLOTS.length; i++) {
             if (ITEM_SLOTS[i] == slot) {
                 int idx = page * ITEMS_PER_PAGE + i;
@@ -285,12 +258,9 @@ public class AuctionHouseGUI {
         confirmGUI.open();
     }
 
-    // ── Filter / Sort ────────────────────────────────────────
-
     private List<AuctionListing> getFilteredSortedListings() {
         List<AuctionListing> result = new ArrayList<>(plugin.getAuctionManager().getActiveListings());
 
-        // Search filter
         if (searchQuery != null && !searchQuery.isEmpty()) {
             String q = searchQuery.toLowerCase();
             result = result.stream()
@@ -298,10 +268,6 @@ public class AuctionHouseGUI {
                     .collect(Collectors.toList());
         }
 
-        // Category filter (handled by AuctionCategoryGUI setting categoryFilter)
-        // For now, basic material group matching is done in AuctionCategoryGUI
-
-        // Sort
         switch (sortMode) {
             case PRICE_ASC  -> result.sort(Comparator.comparingDouble(AuctionListing::getPrice));
             case PRICE_DESC -> result.sort(Comparator.comparingDouble(AuctionListing::getPrice).reversed());
@@ -315,7 +281,6 @@ public class AuctionHouseGUI {
         return Math.max(1, (int) Math.ceil((double) listings.size() / ITEMS_PER_PAGE));
     }
 
-    // ── Getters / Setters ────────────────────────────────────
     public Inventory getInventory() { return inventory; }
     public void setSearchQuery(String q) { this.searchQuery = q; page = 0; }
     public void setCategoryFilter(String cat) { this.categoryFilter = cat; page = 0; }

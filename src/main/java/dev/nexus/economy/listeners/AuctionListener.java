@@ -27,7 +27,6 @@ public class AuctionListener implements Listener {
         boolean rightClick = event.isRightClick();
         boolean leftClick = event.isLeftClick();
 
-        // ── Auction House GUI ──────────────────────────────────
         AuctionHouseGUI ah = GUIManager.getOpenAH(uuid);
         if (ah != null && inv.equals(ah.getInventory())) {
             event.setCancelled(true);
@@ -37,7 +36,6 @@ public class AuctionListener implements Listener {
             return;
         }
 
-        // ── Confirm Purchase GUI ───────────────────────────────
         ConfirmPurchaseGUI confirm = GUIManager.getOpenConfirm(uuid);
         if (confirm != null && inv.equals(confirm.getInventory())) {
             event.setCancelled(true);
@@ -47,7 +45,6 @@ public class AuctionListener implements Listener {
             return;
         }
 
-        // ── My Listings GUI ────────────────────────────────────
         MyListingsGUI myListings = GUIManager.getOpenMyListings(uuid);
         if (myListings != null && inv.equals(myListings.getInventory())) {
             event.setCancelled(true);
@@ -57,7 +54,6 @@ public class AuctionListener implements Listener {
             return;
         }
 
-        // ── Category GUI ───────────────────────────────────────
         AuctionCategoryGUI cat = GUIManager.getOpenCategory(uuid);
         if (cat != null && inv.equals(cat.getInventory())) {
             event.setCancelled(true);

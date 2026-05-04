@@ -36,7 +36,6 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        // /ah — open main GUI
         if (args.length == 0) {
             if (!player.hasPermission("nexuseconomy.ah.open")) {
                 player.sendMessage(plugin.getConfigManager().getMessage("no-permission"));
@@ -48,7 +47,6 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
 
         switch (args[0].toLowerCase()) {
 
-            // /ah sell <price>
             case "sell" -> {
                 if (!player.hasPermission("nexuseconomy.ah.sell")) {
                     player.sendMessage(plugin.getConfigManager().getMessage("no-permission"));
@@ -70,12 +68,12 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(plugin.getConfigManager().getMessage("auction-house.no-item-hand"));
                     return true;
                 }
-                // Clone the full stack to list, then remove it from the player's hand
+                
                 ItemStack toList = hand.clone();
                 AuctionManager.ListResult result = plugin.getAuctionManager().listItem(player, toList, price);
                 switch (result) {
                     case SUCCESS -> {
-                        // Remove the entire stack from hand
+                        
                         player.getInventory().setItemInMainHand(null);
                         String successMsg = plugin.getConfigManager().getMessage("auction-house.listing-success")
                                 .replace("{item}", dev.nexus.economy.utils.MessageUtil.getItemName(toList))
@@ -100,7 +98,6 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                 }
             }
 
-            // /ah search <query>
             case "search" -> {
                 if (!player.hasPermission("nexuseconomy.ah.search")) {
                     player.sendMessage(plugin.getConfigManager().getMessage("no-permission"));
@@ -118,7 +115,6 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                 gui.open();
             }
 
-            // /ah mylistings
             case "mylistings", "my" -> {
                 if (!player.hasPermission("nexuseconomy.ah.open")) {
                     player.sendMessage(plugin.getConfigManager().getMessage("no-permission"));
@@ -132,7 +128,6 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                 myListingsGUI.open();
             }
 
-            // /ah cancel <id>
             case "cancel" -> {
                 if (!player.hasPermission("nexuseconomy.ah.cancel")) {
                     player.sendMessage(plugin.getConfigManager().getMessage("no-permission"));
@@ -142,7 +137,7 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(plugin.getConfigManager().getPrefix() + "§cUsage: /ah cancel <listing-id>");
                     return true;
                 }
-                // Try to find listing by partial UUID
+                
                 String idStr = args[1];
                 UUID listingId = plugin.getAuctionManager().getActiveListings().stream()
                         .filter(l -> l.getId().toString().startsWith(idStr) ||

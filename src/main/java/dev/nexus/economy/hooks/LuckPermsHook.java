@@ -30,10 +30,6 @@ public class LuckPermsHook {
 
     public boolean isEnabled() { return enabled; }
 
-    /**
-     * Returns the player's primary group from LuckPerms.
-     * Falls back to "default" if LuckPerms isn't available.
-     */
     public String getPrimaryGroup(Player player) {
         if (!enabled) return "default";
         User user = luckPerms.getUserManager().getUser(player.getUniqueId());
@@ -41,10 +37,6 @@ public class LuckPermsHook {
         return user.getPrimaryGroup();
     }
 
-    /**
-     * Resolves the max listing tier for a player:
-     * admin > mvp > vip > default
-     */
     public String getListingTier(Player player) {
         if (player.hasPermission("nexuseconomy.admin")) return "admin";
         if (player.hasPermission("nexuseconomy.ah.maxlistings.mvp")) return "mvp";

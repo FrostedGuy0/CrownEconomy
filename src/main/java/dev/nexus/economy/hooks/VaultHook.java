@@ -17,14 +17,12 @@ public class VaultHook {
     }
 
     public boolean setup() {
-        // Vault plugin itself must be present
+        
         if (plugin.getServer().getPluginManager().getPlugin("Vault") == null) {
             plugin.getLogger().severe("Vault plugin not found! Install Vault and an economy plugin (e.g. EssentialsX).");
             return false;
         }
 
-        // The economy *service* is registered by the economy plugin (e.g. EssentialsX),
-        // not by Vault itself. If it's null here, the economy plugin hasn't loaded yet.
         RegisteredServiceProvider<Economy> rsp = plugin.getServer()
                 .getServicesManager().getRegistration(Economy.class);
 
@@ -33,7 +31,6 @@ public class VaultHook {
             plugin.getLogger().warning("Make sure an economy plugin (EssentialsX, CMI, GemsEconomy, etc.) is installed.");
             plugin.getLogger().warning("Retrying in 5 seconds...");
 
-            // Retry once after a short delay — some economy plugins register slightly late
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 RegisteredServiceProvider<Economy> retry = plugin.getServer()
                         .getServicesManager().getRegistration(Economy.class);
@@ -49,7 +46,7 @@ public class VaultHook {
                     plugin.getLogger().severe("Still no economy provider after retry. Economy features disabled.");
                     plugin.getLogger().severe("Install an economy plugin like EssentialsX or CMI.");
                 }
-            }, 100L); // 5 seconds (100 ticks)
+            }, 100L); 
 
             return false;
         }

@@ -12,6 +12,6 @@ public final class ILicence {
     }
 
     public void stop() {
-        // No-op lifecycle hook for the one-line setup.
+        
     }
 }

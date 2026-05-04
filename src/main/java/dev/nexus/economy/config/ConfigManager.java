@@ -25,7 +25,6 @@ public class ConfigManager {
         return config;
     }
 
-    // ── General ──────────────────────────────────────────────
     public String getPrefix() {
         return color(config.getString("general.prefix", "&8[&bNexus&3Economy&8] &r"));
     }
@@ -38,7 +37,6 @@ public class ConfigManager {
         return config.getInt("general.decimal-places", 2);
     }
 
-    // ── Auction House ────────────────────────────────────────
     public boolean isAHEnabled() {
         return config.getBoolean("auction-house.enabled", true);
     }
@@ -92,12 +90,10 @@ public class ConfigManager {
         return config.getStringList("auction-house.blacklisted-materials");
     }
 
-    // ── GUI ──────────────────────────────────────────────────
     public String getFillerMaterial() {
         return config.getString("auction-house.gui.filler-material", "BLACK_STAINED_GLASS_PANE");
     }
 
-    // ── Messages ─────────────────────────────────────────────
     public String getMessage(String path) {
         String raw = config.getString("messages." + path, "&cMessage not found: " + path);
         return color(getPrefix() + raw);

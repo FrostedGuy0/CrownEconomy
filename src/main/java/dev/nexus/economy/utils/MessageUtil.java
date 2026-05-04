@@ -27,7 +27,7 @@ public class MessageUtil {
             return strip(meta.getDisplayName());
         }
         String name = item.getType().name().replace("_", " ");
-        // Title case
+        
         String[] words = name.toLowerCase(Locale.ROOT).split(" ");
         StringBuilder sb = new StringBuilder();
         for (String word : words) {

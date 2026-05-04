@@ -18,7 +18,7 @@ public class AuctionManager {
 
     private final NexusEconomy plugin;
     private final List<AuctionListing> activeListings = new ArrayList<>();
-    // Expired listings waiting to be collected: sellerUUID -> list
+    
     private final Map<UUID, List<AuctionListing>> expiredBin = new HashMap<>();
     private BukkitTask expiryTask;
     private File dataFile;
@@ -47,8 +47,6 @@ public class AuctionManager {
         saveToFile();
     }
 
-    // ── Listing ───────────────────────────────────────────────
-
     public enum ListResult {
         SUCCESS, BLACKLISTED, MAX_REACHED, PRICE_TOO_LOW, PRICE_TOO_HIGH, NO_ITEM
     }
@@ -56,17 +54,14 @@ public class AuctionManager {
     public ListResult listItem(Player player, ItemStack item, double price) {
         if (item == null || item.getType().isAir()) return ListResult.NO_ITEM;
 
-        // Blacklist check
         List<String> blacklist = plugin.getConfigManager().getBlacklistedMaterials();
         if (blacklist.contains(item.getType().name())) return ListResult.BLACKLISTED;
 
-        // Price bounds
         double min = plugin.getConfigManager().getMinPrice();
         double max = plugin.getConfigManager().getMaxPrice();
         if (price < min) return ListResult.PRICE_TOO_LOW;
         if (price > max) return ListResult.PRICE_TOO_HIGH;
 
-        // Max listings check
         String tier = plugin.getLuckPermsHook().getListingTier(player);
         int maxListings = plugin.getConfigManager().getMaxListings(tier);
         long currentCount = activeListings.stream()
@@ -82,8 +77,6 @@ public class AuctionManager {
         return ListResult.SUCCESS;
     }
 
-    // ── Purchasing ───────────────────────────────────────────
-
     public enum BuyResult {
         SUCCESS, NOT_FOUND, OWN_LISTING, NOT_ENOUGH_MONEY
     }
@@ -96,13 +89,11 @@ public class AuctionManager {
         double price = listing.getPrice();
         if (!plugin.getVaultHook().has(buyer, price)) return BuyResult.NOT_ENOUGH_MONEY;
 
-        // Process transaction
         plugin.getVaultHook().withdraw(buyer, price);
         double taxRate = plugin.getConfigManager().getTaxRate();
         double taxAmount = price * (taxRate / 100.0);
         double sellerReceives = price - taxAmount;
 
-        // Pay seller (if online, else store for pickup — simplified: deposit directly)
         Player seller = Bukkit.getPlayer(listing.getSellerUUID());
         if (seller != null) {
             plugin.getVaultHook().deposit(seller, sellerReceives);
@@ -112,14 +103,13 @@ public class AuctionManager {
                     .replace("{tax}", String.valueOf((int) taxRate));
             seller.sendMessage(msg);
         } else {
-            // Offline seller — deposit directly via vault (works with most economy plugins)
+            
             plugin.getVaultHook().deposit(Bukkit.getOfflinePlayer(listing.getSellerUUID()), sellerReceives);
         }
 
-        // Give item to buyer
         Map<Integer, ItemStack> leftover = buyer.getInventory().addItem(listing.getItem());
         if (!leftover.isEmpty()) {
-            // Drop at feet if inventory is full
+            
             leftover.values().forEach(i -> buyer.getWorld().dropItemNaturally(buyer.getLocation(), i));
         }
 
@@ -129,22 +119,18 @@ public class AuctionManager {
         return BuyResult.SUCCESS;
     }
 
-    // ── Cancel ───────────────────────────────────────────────
-
     public boolean cancelListing(Player player, UUID listingId, boolean admin) {
         AuctionListing listing = getActiveById(listingId);
         if (listing == null) return false;
         if (!admin && !listing.getSellerUUID().equals(player.getUniqueId())) return false;
 
         activeListings.remove(listing);
-        // Return item
+        
         Map<Integer, ItemStack> leftover = player.getInventory().addItem(listing.getItem());
         leftover.values().forEach(i -> player.getWorld().dropItemNaturally(player.getLocation(), i));
         saveToFile();
         return true;
     }
-
-    // ── Expiry ───────────────────────────────────────────────
 
     private void startExpiryTask() {
         expiryTask = Bukkit.getScheduler().runTaskTimer(plugin, this::checkExpiry, 20 * 60, 20 * 60);
@@ -159,7 +145,7 @@ public class AuctionManager {
                 if (plugin.getConfigManager().isReturnExpired()) {
                     expiredBin.computeIfAbsent(listing.getSellerUUID(), k -> new ArrayList<>())
                               .add(listing);
-                    // Notify if online
+                    
                     Player seller = Bukkit.getPlayer(listing.getSellerUUID());
                     if (seller != null) {
                         String msg = plugin.getConfigManager()
@@ -170,7 +156,7 @@ public class AuctionManager {
                 }
             }
         }
-        // Purge old expired bin entries
+        
         int maxHours = plugin.getConfigManager().getExpiredBinDuration();
         long cutoff = System.currentTimeMillis() - (maxHours * 3600000L);
         expiredBin.values().forEach(list -> list.removeIf(l -> l.getExpiresAt() < cutoff));
@@ -188,8 +174,6 @@ public class AuctionManager {
         expiredBin.remove(player.getUniqueId());
         return count;
     }
-
-    // ── Search / Filter ──────────────────────────────────────
 
     public List<AuctionListing> getActiveListings() {
         return activeListings.stream()
@@ -217,8 +201,6 @@ public class AuctionManager {
     public AuctionListing getActiveById(UUID id) {
         return activeListings.stream().filter(l -> l.getId().equals(id)).findFirst().orElse(null);
     }
-
-    // ── Persistence ──────────────────────────────────────────
 
     @SuppressWarnings("unchecked")
     private void loadFromFile() {
@@ -266,7 +248,7 @@ public class AuctionManager {
             dataConfig.set(path + "expired", listing.isExpired());
             dataConfig.set(path + "sold", listing.isSold());
         }
-        // Save expired bin
+        
         for (Map.Entry<UUID, List<AuctionListing>> entry : expiredBin.entrySet()) {
             for (AuctionListing listing : entry.getValue()) {
                 String path = "listings." + listing.getId() + ".";

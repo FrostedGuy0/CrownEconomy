@@ -29,7 +29,6 @@ public class AuctionListing {
         this.sold = false;
     }
 
-    // Constructor for loading from storage
     public AuctionListing(UUID id, UUID sellerUUID, String sellerName, ItemStack item,
                           double price, long listedAt, long expiresAt,
                           boolean expired, boolean sold) {
@@ -65,7 +64,6 @@ public class AuctionListing {
         return minutes + "m";
     }
 
-    // Getters
     public UUID getId()          { return id; }
     public UUID getSellerUUID()  { return sellerUUID; }
     public String getSellerName(){ return sellerName; }

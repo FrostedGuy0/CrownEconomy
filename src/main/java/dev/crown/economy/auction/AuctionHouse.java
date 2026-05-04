@@ -383,7 +383,6 @@ public final class AuctionHouse {
             asyncWriteRunning = true;
         }
 
-        // Serialize writes so a stale snapshot cannot overwrite a newer one later.
         Bukkit.getScheduler().runTaskAsynchronously(plugin, this::flushQueuedWrites);
     }
 

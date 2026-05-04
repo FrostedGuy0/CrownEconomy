@@ -10,7 +10,7 @@ public class GUIManager {
     private static final Map<UUID, MyListingsGUI> openMyListings = new HashMap<>();
     private static final Map<UUID, ConfirmPurchaseGUI> openConfirms = new HashMap<>();
     private static final Map<UUID, AuctionCategoryGUI> openCategories = new HashMap<>();
-    // Pending search: player UUID → the AH GUI waiting for input
+    
     private static final Map<UUID, AuctionHouseGUI> pendingSearches = new HashMap<>();
 
     public static void setOpenAH(UUID uuid, AuctionHouseGUI gui) { openAHGuis.put(uuid, gui); }

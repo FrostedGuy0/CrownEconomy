@@ -14,9 +14,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * My Listings GUI (6 rows) - shows the player's own active listings with cancel option.
- */
 public class MyListingsGUI {
 
     private static final int[] ITEM_SLOTS = {
@@ -65,7 +62,6 @@ public class MyListingsGUI {
             }
         }
 
-        // Nav
         boolean hasPrev = page > 0;
         boolean hasNext = (page + 1) * ITEM_SLOTS.length < myListings.size();
 
@@ -81,7 +77,6 @@ public class MyListingsGUI {
                 hasNext ? Material.ARROW : Material.GRAY_STAINED_GLASS_PANE,
                 hasNext ? "&bNext →" : "&8Next →"));
 
-        // Show empty state
         if (myListings.isEmpty()) {
             inventory.setItem(22, GuiUtil.makeItem(Material.PAPER,
                     "&eNo Active Listings",

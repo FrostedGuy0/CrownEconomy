@@ -12,9 +12,6 @@ import java.util.stream.Collectors;
 
 public class GuiUtil {
 
-    /**
-     * Create a simple GUI item with name and lore.
-     */
     public static ItemStack makeItem(Material material, String name, String... lore) {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
@@ -36,9 +33,6 @@ public class GuiUtil {
         return makeItem(material, name, lore.toArray(new String[0]));
     }
 
-    /**
-     * Create a glowing item (has enchant glow without showing it).
-     */
     public static ItemStack makeGlowItem(Material material, String name, String... lore) {
         ItemStack item = makeItem(material, name, lore);
         ItemMeta meta = item.getItemMeta();
@@ -50,16 +44,10 @@ public class GuiUtil {
         return item;
     }
 
-    /**
-     * Filler glass pane for borders.
-     */
     public static ItemStack filler(Material material) {
         return makeItem(material, " ");
     }
 
-    /**
-     * Fill border slots of a GUI with filler.
-     */
     public static void fillBorder(org.bukkit.inventory.Inventory inv, Material material) {
         ItemStack filler = filler(material);
         int size = inv.getSize();

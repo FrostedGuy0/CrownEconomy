@@ -11,9 +11,6 @@ import org.bukkit.inventory.Inventory;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Category selection GUI (3 rows).
- */
 public class AuctionCategoryGUI {
 
     private static final int SLOT_BACK = 22;
@@ -46,7 +43,6 @@ public class AuctionCategoryGUI {
     private void build() {
         GuiUtil.fillBorder(inventory, Material.BLUE_STAINED_GLASS_PANE);
 
-        // Place categories in center
         int[] catSlots = {10, 11, 12, 13, 14, 15, 16, 22};
         String current = parent.getCategoryFilter();
 
